@@ -1,5 +1,7 @@
 use simulator::{Action, ActionMask, Condition, Settings, SimulationState};
 
+use log::debug;
+
 use super::search_queue::SearchScore;
 use crate::actions::{DURABILITY_ACTIONS, PROGRESS_ACTIONS, QUALITY_ACTIONS};
 use crate::macro_solver::fast_lower_bound::fast_lower_bound;
@@ -172,7 +174,7 @@ impl<'a> MacroSolver<'a> {
         }
 
         if let Some(solution) = solution {
-            dbg!(&solution.actions);
+            debug!("Solution actions: {:?}", &solution.actions);
             Some(solution.actions)
         } else {
             None

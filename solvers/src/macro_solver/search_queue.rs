@@ -2,6 +2,8 @@ use std::collections::BTreeMap;
 
 use simulator::{Action, Settings, SimulationState};
 
+use log::debug;
+
 use crate::utils::Backtracking;
 
 use super::pareto_front::{EffectParetoFront, QualityParetoFront};
@@ -101,7 +103,7 @@ impl SearchQueue {
             }
             dropped += self.buckets.pop_first().unwrap().1.len();
         }
-        dbg!(self.minimum_score, dropped);
+        debug!("Updated minimum score: {:?}, Dropped entries: {}", self.minimum_score, dropped);
     }
 
     pub fn push(

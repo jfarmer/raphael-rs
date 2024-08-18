@@ -3,6 +3,8 @@ use simulator::{Condition, Settings, SimulationState};
 
 use rustc_hash::FxHashMap as HashMap;
 
+use log::debug;
+
 use super::state::{ReducedState, ReducedStateWithDurability, ReducedStateWithoutDurability};
 
 pub struct StepLowerBoundSolver {
@@ -52,8 +54,8 @@ struct StepLowerBoundSolverImpl<S: ReducedState> {
 
 impl<S: ReducedState> StepLowerBoundSolverImpl<S> {
     pub fn new(settings: Settings) -> Self {
-        dbg!(std::mem::size_of::<S>());
-        dbg!(std::mem::align_of::<S>());
+        debug!("ReducedState size: {} bytes", std::mem::size_of::<S>());
+        debug!("ReducedState alignment: {} bytes", std::mem::align_of::<S>());
         Self {
             settings: Settings {
                 allowed_actions: S::optimize_action_mask(settings.allowed_actions),
@@ -151,7 +153,7 @@ mod tests {
     fn solve(settings: Settings, actions: &[Action]) -> u8 {
         let state = SimulationState::from_macro(&settings, actions).unwrap();
         let result = StepLowerBoundSolver::new(settings).step_lower_bound(state);
-        dbg!(result);
+        debug!("StepLowerBoundSolver result: {}", result);
         result
     }
 

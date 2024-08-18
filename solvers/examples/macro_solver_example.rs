@@ -1,9 +1,11 @@
 use simulator::{Action, ActionMask, Settings, SimulationState};
 use solvers::MacroSolver;
 
+use log::debug;
+
 fn main() {
-    dbg!(std::mem::size_of::<SimulationState>());
-    dbg!(std::mem::align_of::<SimulationState>());
+    debug!("SimulationState size: {} bytes", std::mem::size_of::<SimulationState>());
+    debug!("SimulationState alignment: {} bytes", std::mem::align_of::<SimulationState>());
 
     // Ra'Kaznar Lapidary Hammer
     // 4462 Craftsmanship, 4391 Control
@@ -32,5 +34,5 @@ fn main() {
         .quality;
     let steps = actions.len();
     let duration: i16 = actions.iter().map(|action| action.time_cost()).sum();
-    dbg!(quality, steps, duration);
+    debug!("Quality: {}, Steps: {}, Duration: {}", quality, steps, duration);
 }

@@ -2,6 +2,8 @@ use simulator::{Action, ActionMask, Combo, Condition, Effects, Settings, Simulat
 
 use rustc_hash::FxHashMap as HashMap;
 
+use log::debug;
+
 use super::actions::{DURABILITY_ACTIONS, PROGRESS_ACTIONS};
 
 const SEARCH_ACTIONS: ActionMask = PROGRESS_ACTIONS
@@ -53,8 +55,8 @@ pub struct FinishSolver {
 
 impl FinishSolver {
     pub fn new(settings: Settings) -> FinishSolver {
-        dbg!(std::mem::size_of::<ReducedState>());
-        dbg!(std::mem::align_of::<ReducedState>());
+        debug!("ReducedState size: {} bytes", std::mem::size_of::<ReducedState>());
+        debug!("ReducedState alignment: {} bytes", std::mem::align_of::<ReducedState>());
         FinishSolver {
             settings,
             max_progress: HashMap::default(),
@@ -105,6 +107,6 @@ impl FinishSolver {
 
 impl Drop for FinishSolver {
     fn drop(&mut self) {
-        dbg!(self.max_progress.len());
+        debug!("FinishSolver max_progress length: {}", self.max_progress.len());
     }
 }

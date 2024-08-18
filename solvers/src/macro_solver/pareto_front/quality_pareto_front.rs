@@ -1,6 +1,8 @@
 use rustc_hash::FxHashMap;
 use simulator::{Combo, Effects, Settings, SimulationState};
 
+use log::debug;
+
 use super::{Dominate, ParetoFront};
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -78,6 +80,6 @@ impl QualityParetoFront {
 impl Drop for QualityParetoFront {
     fn drop(&mut self) {
         let pareto_entries: usize = self.buckets.values().map(|value| value.len()).sum();
-        dbg!(self.buckets.len(), pareto_entries);
+        debug!("QualityParetoFront stats - Buckets: {}, Pareto entries: {}", self.buckets.len(), pareto_entries);
     }
 }

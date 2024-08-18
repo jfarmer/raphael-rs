@@ -1,6 +1,8 @@
 use radix_heap::RadixHeapMap;
 use simulator::{Action, ActionMask, Combo, Condition, Settings, SimulationState};
 
+use log::debug;
+
 use crate::{
     actions::{DURABILITY_ACTIONS, QUALITY_ACTIONS},
     finish_solver::FinishSolver,
@@ -61,7 +63,7 @@ pub fn fast_lower_bound(
         }
     }
 
-    dbg!(quality_lower_bound);
+    debug!("Fast lower bound quality: {}", quality_lower_bound);
     std::cmp::min(settings.max_quality, quality_lower_bound)
 }
 

@@ -5,6 +5,7 @@ use crate::{
 use simulator::{Action, ActionMask, Combo, Condition, Settings, SimulationState, SingleUse};
 
 use rustc_hash::FxHashMap as HashMap;
+use log::{debug, trace};
 
 use super::state::ReducedState;
 
@@ -25,8 +26,8 @@ pub struct QualityUpperBoundSolver {
 
 impl QualityUpperBoundSolver {
     pub fn new(settings: Settings) -> Self {
-        dbg!(std::mem::size_of::<ReducedState>());
-        dbg!(std::mem::align_of::<ReducedState>());
+        debug!("ReducedState size: {} bytes", std::mem::size_of::<ReducedState>());
+        debug!("ReducedState alignment: {} bytes", std::mem::align_of::<ReducedState>());
         let mut durability_cost = Action::MasterMend.cp_cost() / 6;
         if settings.allowed_actions.has(Action::Manipulation) {
             durability_cost = std::cmp::min(durability_cost, Action::Manipulation.cp_cost() / 8);
@@ -228,7 +229,7 @@ mod tests {
     fn solve(settings: Settings, actions: &[Action]) -> u16 {
         let state = SimulationState::from_macro(&settings, actions).unwrap();
         let result = QualityUpperBoundSolver::new(settings).quality_upper_bound(state);
-        dbg!(result);
+        debug!("Quality upper bound result: {}", result);
         result
     }
 
@@ -722,7 +723,10 @@ mod tests {
                     Err(_) => 0,
                 };
                 if state_upper_bound < child_upper_bound {
-                    dbg!(state, action, state_upper_bound, child_upper_bound);
+                    log::error!(
+                        "Monotonicity violation:\nState: {:?}\nAction: {:?}\nParent upper bound: {}\nChild upper bound: {}",
+                        state, action, state_upper_bound, child_upper_bound
+                    );
                     panic!("Parent's upper bound is less than child's upper bound");
                 }
             }

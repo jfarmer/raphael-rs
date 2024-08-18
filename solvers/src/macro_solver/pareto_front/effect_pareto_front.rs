@@ -1,6 +1,8 @@
 use rustc_hash::FxHashMap;
 use simulator::{Combo, Settings, SimulationState};
 
+use log::debug;
+
 use super::{Dominate, ParetoFront};
 
 #[bitfield_struct::bitfield(u32)]
@@ -93,6 +95,6 @@ impl EffectParetoFront {
 impl Drop for EffectParetoFront {
     fn drop(&mut self) {
         let pareto_entries: usize = self.buckets.values().map(|value| value.len()).sum();
-        dbg!(self.buckets.len(), pareto_entries);
+        debug!("EffectParetoFront stats - Buckets: {}, Pareto entries: {}", self.buckets.len(), pareto_entries);
     }
 }
