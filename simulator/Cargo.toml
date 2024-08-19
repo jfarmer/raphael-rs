@@ -15,4 +15,3 @@ rand = "0.8.5"
 bitfield-struct = "0.8.0"
 serde = { version = "1.0.203", features = ["derive"] }
 log = "0.4"
-env_logger = "0.10"
