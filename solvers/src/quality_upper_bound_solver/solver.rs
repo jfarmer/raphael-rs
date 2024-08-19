@@ -5,7 +5,7 @@ use crate::{
 use simulator::{Action, ActionMask, Combo, Condition, Settings, SimulationState, SingleUse};
 
 use rustc_hash::FxHashMap as HashMap;
-use log::{debug, trace};
+use log::debug;
 
 use super::state::ReducedState;
 
