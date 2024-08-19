@@ -1,5 +1,7 @@
 use simulator::{Action, ActionMask, Condition, Settings, SimulationState};
 
+use log::debug;
+
 const SETTINGS: Settings = Settings {
     max_cp: 1000,
     max_durability: 80,
