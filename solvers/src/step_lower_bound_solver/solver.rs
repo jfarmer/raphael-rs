@@ -649,7 +649,10 @@ mod tests {
                     Err(_) => u8::MAX,
                 };
                 if state_lower_bound > child_lower_bound.saturating_add(1) {
-                    dbg!(state, action, state_lower_bound, child_lower_bound);
+                    log::error!(
+                        "Monotonicity violation:\nState: {:?}\nAction: {:?}\nParent lower bound: {}\nChild lower bound: {}",
+                        state, action, state_lower_bound, child_lower_bound
+                    );
                     panic!("Parent's step lower bound is greater than child's step lower bound");
                 }
             }
